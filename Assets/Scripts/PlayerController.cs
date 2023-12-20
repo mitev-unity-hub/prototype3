@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playerRigidBody;
+    public float speed = 10.0f;
 
-    private float speed = 10.0f;
+    private Rigidbody playerRigidBody;
     private float zBound = 7.5f;
     void Start()
     {
@@ -38,6 +38,22 @@ public class PlayerController : MonoBehaviour
         if (transform.position.z > zBound)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, zBound);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ( collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Collide with enemy: " + collision.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Powerup"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }
